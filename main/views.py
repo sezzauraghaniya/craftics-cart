@@ -4,7 +4,7 @@ from django.shortcuts import render
 def show_main(request):
     context = {
         'name_of_craft' : 'Crochet Bunny',
-        'materials': 'Cotton Wool',
+        'description': 'Cotton Wool',
         'price': '65.000'
     }
 
