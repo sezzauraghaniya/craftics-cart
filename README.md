@@ -66,4 +66,38 @@ class MoodEntry(models.Model):
         return self.mood_intensity > 5
 ```
 
-10. 
+10. Migrasi model untuk melacak perubahan pada model basis data.
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+11. Integrasi komponen MVT dengan impor fungsi `render` dari modul `django.shortcuts`, dan menambahkan fungsi `show_main` berisikan atributes
+
+```bash
+def show_main(request):
+    context = {
+        'name_of_craft' : 'Crochet Bunny',
+        'description': 'Cotton Wool',
+        'price': '65.000'
+    }
+
+    return render(request, "main.html", context)
+```
+12. Konfigurasi *routing* URL milik `main` di file `urls.py`
+
+```bash
+app_name = 'main'
+
+urlpatterns = [
+    path('', show_main, name='show_main'),
+]
+```
+13. Test final aplikasi pada `localhost` dengan command:
+
+```bash
+python manage.py runserver
+```
+lalu proyek di-*deploy* pada *PWS*
+
