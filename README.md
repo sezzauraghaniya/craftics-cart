@@ -55,11 +55,11 @@ kemudian menambahkan `main` pada variabel `INSTALLED_APPS`
 ```bash
 from django.db import models
 
-class MoodEntry(models.Model):
-    mood = models.CharField(max_length=255)
-    time = models.DateField(auto_now_add=True)
-    feelings = models.TextField()
-    mood_intensity = models.IntegerField()
+class Crafts(models.Model):
+    name = models.CharField(max_length=255)
+    price = models.IntegerField() 
+    description = models.TextField(max_length=2000)
+    materials = models.CharField(max_length=255)
 
     @property
     def is_mood_strong(self):
@@ -79,8 +79,9 @@ python manage.py migrate
 def show_main(request):
     context = {
         'name_of_craft' : 'Crochet Bunny',
-        'description': 'Cotton Wool',
-        'price': '65.000'
+        'description': 'Bunny-shaped crocheted doll',
+        'price': '65.000',
+        'materials': 'Cotton Wool'
     }
 
     return render(request, "main.html", context)
@@ -101,3 +102,17 @@ python manage.py runserver
 ```
 lalu proyek di-*deploy* pada *PWS*
 
+### Django Architecture Diagram
+
+<!-- ![](D:\sems3\PBP TUGAS INDIVIDU\assets\bagan PBP.png) -->
+Diagram ini mencerminkan hubungan antara berbagai komponen dalam arsitektur Django, di mana views.py menjadi pusat pengolahan yang menghubungkan urls.py, models.py, dan template HTML. Alur kerjanya seperti berikut:
+
+1. User melakukan permintaan (request) melalui URL yang dikonfigurasi dalam urls.py.
+2. urls.py meneruskan permintaan tersebut ke views.py sesuai dengan view yang dibutuhkan.
+3. views.py kemudian melakukan pengolahan, berinteraksi dengan models.py untuk membaca (read) atau menulis (write) data ke database.
+4. views.py juga akan merender template (berkas HTML) yang dibutuhkan dengan menggunakan data yang diperoleh dari model.
+5. Setelah pengolahan selesai, views.py memberikan respons kembali ke User dalam bentuk halaman web yang sudah di-render.
+
+### Git for Software Development
+
+Git digunakan sebagai sistem kontrol versi yang mengelola perubahan kode, mendukung kolaborasi tim, melacak riwayat, menyelesaikan konflik, dan menjaga keamanan. Git juga memungkinkan *rollback* serta integrasi dengan layanan CI/CD, membuat pengembangan *software* lebih efisien dan terorganisir.
