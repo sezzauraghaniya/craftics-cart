@@ -119,6 +119,8 @@ Git digunakan sebagai sistem kontrol versi yang mengelola perubahan kode, menduk
 
 ### Pemilihan Django Framework
 
+Berikut adalah alasan memilih Django sebagai *framework* pemula:
+
 1. Django mencakup hampir semua yang dibutuhkan untuk membuat *website*. Mulai dari meng-*handle database* sampai validasi pengguna.
 
 2. Instalasi Django yang hanya membutuhkan **python 3** dan aktivasi *virtual environment* terhitung mudah dari yang lain.
