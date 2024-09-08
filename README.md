@@ -116,3 +116,13 @@ Diagram ini mencerminkan hubungan antara berbagai komponen dalam arsitektur Djan
 ### Git for Software Development
 
 Git digunakan sebagai sistem kontrol versi yang mengelola perubahan kode, mendukung kolaborasi tim, melacak riwayat, menyelesaikan konflik, dan menjaga keamanan. Git juga memungkinkan *rollback* serta integrasi dengan layanan CI/CD, membuat pengembangan *software* lebih efisien dan terorganisir.
+
+### Pemilihan Django Framework
+
+1. Django mencakup hampir semua yang dibutuhkan untuk membuat *website*. Mulai dari meng-*handle database* sampai validasi pengguna.
+
+2. Instalasi Django yang hanya membutuhkan **python 3** dan aktivasi *virtual environment* terhitung mudah dari yang lain.
+
+### Django as ORM (Object-Relational Mapping)
+
+Sesuai dengan namanya, ORM berarti pemetaan dari Object-Oriented Programming **(OOP)** ke *relational database*. dengan kata lain, berfungsi untuk menjembatani kedua sistem dan secara otomatik mengonversi data-data di dalamnya.
