@@ -1,11 +1,9 @@
 from django.db import models
 
-class Crafts(models.Model):
+class Craft(models.Model):
     name = models.CharField(max_length=255)
-    price = models.IntegerField()  # No need for max_length in IntegerField
+    price = models.IntegerField()
     description = models.TextField(max_length=2000)
-    materials = models.CharField(max_length=255)
 
-    @property
-    def is_mood_strong(self):
-        return self.mood_intensity > 5
+    def __str__(self):
+        return self.name
