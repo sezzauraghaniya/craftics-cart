@@ -104,7 +104,8 @@ lalu proyek di-*deploy* pada *PWS*
 
 ### Django Architecture Diagram
 
-<!-- ![](D:\sems3\PBP TUGAS INDIVIDU\assets\bagan PBP.png) -->
+  <img src="image/diagram-django.png">
+
 Diagram ini mencerminkan hubungan antara berbagai komponen dalam arsitektur Django, di mana views.py menjadi pusat pengolahan yang menghubungkan urls.py, models.py, dan template HTML. Alur kerjanya seperti berikut:
 
 1. User melakukan permintaan (request) melalui URL yang dikonfigurasi dalam urls.py.
