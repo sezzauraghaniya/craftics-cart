@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 def show_main(request):
     context = {
-        'nama' : 'Crochet Bunny',
+        'nama' : 'Sezza Auraghaniya Winanda',
         'kelas': 'PBP F',
         'crafts': [
             {'name': 'Crochet Bunny', 'price': 65.000, 'description': 'Boneka bentuk kelinci terbuat dari bahan rajutan.'},

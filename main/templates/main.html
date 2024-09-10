@@ -1,20 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Craftics-Cart!</title>
-</head>
-<body>
-    <h1>Welcome, Crafters!</h1>
-    <strong>created by: {{ nama }} from {{ kelas }}</strong>
-    <br></br>
-    <h1>Available Crafts:</h1>
-    <ul>
-        {% for craft in crafts %}
-        <li>
-            <h2>{{ craft.name }} - ${{ craft.price }}</h2>
-            <p>{{ craft.description }}</p>
-            {% endfor %}
-        </li>
-    </ul>
-</body>
-</html>
+<h5>NPM: </h5>
+<p>{{ npm }}<p>
+<h5>Name: </h5>
+<p>{{ name }}<p>
+<h5>Class: </h5>
+<p>{{ class }}<p>
