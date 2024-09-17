@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 <head>
     <title>Craftics-Cart!</title>
 </head>
@@ -11,10 +12,40 @@
     <ul>
         {% for craft in crafts %}
         <li>
-            <h2>{{ craft.name }} - ${{ craft.price }}</h2>
+            <h2>{{ craft.name }} - Rp{{ craft.price }}00</h2>
             <p>{{ craft.description }}</p>
         </li>
         {% endfor %}
     </ul>
 </body>
 </html>
+
+{% if not craft_entries %}
+<p> No other craft added to Craftics-Cart... </p>
+{% else %}
+<table> 
+    <tr>
+        <th>Craft's Name</th>
+        <th>Description</th>
+        <th>Price</th>
+    </tr>
+</table>
+
+{% comment %} Craft's Added {% endcomment%}
+
+{% for craft_entry in craft_entries%}
+<tr>
+    <td>{{craft_entry.name}}</td>
+    <td>{{craft_entry.description}}</td>
+    <td>{{craft_entry.price}}</td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}
+
+<br />
+
+<a href="{% url 'main:create_craft_entry' %}">
+    <button> Add New Craft</button>
+</a>
+{% endblock content %} 
