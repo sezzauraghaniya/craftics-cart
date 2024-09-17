@@ -38,14 +38,13 @@
     <td>{{craft_entry.name}}</td>
     <td>{{craft_entry.description}}</td>
     <td>{{craft_entry.price}}</td>
-</tr>
+</tr>   
 {% endfor %}
 </table>
 {% endif %}
 
 <br />
-
 <a href="{% url 'main:create_craft_entry' %}">
-    <button> Add New Craft</button>
+    <button>Add New Craft</button>
 </a>
 {% endblock content %} 
