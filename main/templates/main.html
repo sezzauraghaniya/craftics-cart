@@ -25,18 +25,17 @@
 {% else %}
 <table> 
     <tr>
-        <th>Craft's Name</th>
-        <th>Description</th>
+        <th>Craft's Name --</th>
+        <th>Description --</th>
         <th>Price</th>
     </tr>
 </table>
 
 {% comment %} Craft's Added {% endcomment%}
-
 {% for craft_entry in craft_entries%}
 <tr>
-    <td>{{craft_entry.name}}</td>
-    <td>{{craft_entry.description}}</td>
+    <td>{{craft_entry.name}} --</td>
+    <td>{{craft_entry.description}} --</td>
     <td>{{craft_entry.price}}</td>
 </tr>   
 {% endfor %}

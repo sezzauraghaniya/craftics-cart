@@ -108,7 +108,7 @@ lalu proyek di-*deploy* pada *PWS*
 
 Diagram ini mencerminkan hubungan antara berbagai komponen dalam arsitektur Django, di mana views.py menjadi pusat pengolahan yang menghubungkan urls.py, models.py, dan template HTML. Alur kerjanya seperti berikut:
 
-1. User melakukan permintaan (request) melalui URL yang dikonfigurasi dalam urls.py.
+1. User melakukan permintaan (request) melalui URL yang dikonfigurasi dalam 'urls.py'.
 2. urls.py meneruskan permintaan tersebut ke views.py sesuai dengan view yang dibutuhkan.
 3. views.py kemudian melakukan pengolahan, berinteraksi dengan models.py untuk membaca (read) atau menulis (write) data ke database.
 4. views.py juga akan merender template (berkas HTML) yang dibutuhkan dengan menggunakan data yang diperoleh dari model.
@@ -129,3 +129,48 @@ Berikut adalah alasan memilih Django sebagai *framework* pemula:
 ### Django as ORM (Object-Relational Mapping)
 
 Sesuai dengan namanya, ORM berarti pemetaan dari Object-Oriented Programming **(OOP)** ke *relational database*. dengan kata lain, berfungsi untuk menjembatani kedua sistem dan secara otomatik mengonversi data-data di dalamnya.
+
+## Tugas 3 - Implementasi Form dan Data Delivery pada Django
+
+### *Data Delivery* pada Implementasi Platform
+
+Data delivery memungkinkan komunikasi efisien dan pengiriman secara *real-time* antar komponen atau sistem, seperti dari *backend* ke *frontend*
+
+### XML or JSON?
+
+Untuk *website* modern, lebih disarankan penggunaan JSON karena lebih ringan, lebih mudah, dan lebih cepat diproses. 
+
+Namun, XML memiliki kelebihan jika digunakan pada skenario yang lebih kompleks. Seperti data struktur yang *deep* dan dan membutuhkan validasi ketat.
+
+### JSON lebih popular dari XML
+
+Penulisan JSON lebih ringan dengan format yang lebih sederhana. Sehingga lebih mudah dipahami dan mudah di-integrasikan dengan JavaScript. Dimana JavaScript, merupakan bahasa yang banyak digunakan di *front-end*
+
+### Fungsi dari method 'is_valid()' pada form Django
+
+'is_valid()' memeriksa apakah data yang dimasukkan ke dalam form sesuai dengan aturan validasi yang ditetapkan. Ketika data valid akan mengembalikan nilai **True**. Tanpa method 'is_valid()' kemungkinan input penguna tidak sesuai akan lewat begitu saja.
+
+### 'crsf_token' saat Membuat Form di Django
+
+**CRSF** atau Cross-Site Request Forgery, merupakan serangan  dimana penyerang dengan mudah mengirimkan permintaan jahat dari situs lain dengan cara meniru request asli dari aplikasi kita. 'crsf_token' adalah untuk Django memverifikasi bahwa permintaan memang berasal dari pengguna dan bukan *source* lain.
+
+### Pembuatan Form dan Data Delivery pada Craftics-Cart!
+
+1. Membuat file 'forms.py' untuk inisiasi atribut yang diminta kepada User
+
+2. Membuat fungsi pada 'views.py' dalam bentuk XML, JSON, XML by ID, dan JSON by ID.
+
+3. Mmebuat *routing* URL dengan meng-*import* fungsi ke 'urls.py' dan menambhahkan path URL ke 'urlpatterns'
+
+4. Hasil akses URL pada *Postman*
+
+    - XML
+    <img src="image/xml.png">
+    - JSON
+    <img src="image/json.png">
+    - XML by ID
+    <img src="image/xml-id.png">
+    - JSON by ID
+    <img src="image/json-id.png">
+
+5. Melakukan 'add', 'commit', dan 'push' ke github dan PWS.
