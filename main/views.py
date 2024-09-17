@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from main.forms import CraftEntryForm
 from main.models import Craft
 from django.http import HttpResponse
@@ -48,3 +48,8 @@ def show_xml_by_id(request, id):
 def show_json_by_id(request, id):
     data = Craft.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def delete_craft(request, pk):
+    craft = get_object_or_404(Craft, pk=pk)
+    craft.delete()
+    return redirect('main:show_main')
