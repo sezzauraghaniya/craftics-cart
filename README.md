@@ -78,10 +78,10 @@ python manage.py migrate
 ```bash
 def show_main(request):
     context = {
-        'name_of_craft' : 'Crochet Bunny',
-        'description': 'Bunny-shaped crocheted doll',
-        'price': '65.000',
-        'materials': 'Cotton Wool'
+        `name_of_craft` : `Crochet Bunny`,
+        `description`: `Bunny-shaped crocheted doll`,
+        `price`: `65.000`,
+        `materials`: `Cotton Wool`
     }
 
     return render(request, "main.html", context)
@@ -89,10 +89,10 @@ def show_main(request):
 12. Konfigurasi *routing* URL milik `main` di file `urls.py`
 
 ```bash
-app_name = 'main'
+app_name = `main`
 
 urlpatterns = [
-    path('', show_main, name='show_main'),
+    path(`, show_main, name=`show_main`),
 ]
 ```
 13. Test final aplikasi pada `localhost` dengan command:
@@ -108,7 +108,7 @@ lalu proyek di-*deploy* pada *PWS*
 
 Diagram ini mencerminkan hubungan antara berbagai komponen dalam arsitektur Django, di mana views.py menjadi pusat pengolahan yang menghubungkan urls.py, models.py, dan template HTML. Alur kerjanya seperti berikut:
 
-1. User melakukan permintaan (request) melalui URL yang dikonfigurasi dalam 'urls.py'.
+1. User melakukan permintaan (request) melalui URL yang dikonfigurasi dalam `urls.py`.
 2. urls.py meneruskan permintaan tersebut ke views.py sesuai dengan view yang dibutuhkan.
 3. views.py kemudian melakukan pengolahan, berinteraksi dengan models.py untuk membaca (read) atau menulis (write) data ke database.
 4. views.py juga akan merender template (berkas HTML) yang dibutuhkan dengan menggunakan data yang diperoleh dari model.
@@ -146,21 +146,21 @@ Namun, XML memiliki kelebihan jika digunakan pada skenario yang lebih kompleks. 
 
 Penulisan JSON lebih ringan dengan format yang lebih sederhana. Sehingga lebih mudah dipahami dan mudah di-integrasikan dengan JavaScript. Dimana JavaScript, merupakan bahasa yang banyak digunakan di *front-end*
 
-### Fungsi dari method 'is_valid()' pada form Django
+### Fungsi dari method `is_valid()` pada form Django
 
-'is_valid()' memeriksa apakah data yang dimasukkan ke dalam form sesuai dengan aturan validasi yang ditetapkan. Ketika data valid akan mengembalikan nilai **True**. Tanpa method 'is_valid()' kemungkinan input penguna tidak sesuai akan lewat begitu saja.
+`is_valid()` memeriksa apakah data yang dimasukkan ke dalam form sesuai dengan aturan validasi yang ditetapkan. Ketika data valid akan mengembalikan nilai **True**. Tanpa method `is_valid()` kemungkinan input penguna tidak sesuai akan lewat begitu saja.
 
-### 'crsf_token' saat Membuat Form di Django
+### `crsf_token` saat Membuat Form di Django
 
-**CRSF** atau Cross-Site Request Forgery, merupakan serangan  dimana penyerang dengan mudah mengirimkan permintaan jahat dari situs lain dengan cara meniru request asli dari aplikasi kita. 'crsf_token' adalah untuk Django memverifikasi bahwa permintaan memang berasal dari pengguna dan bukan *source* lain.
+**CRSF** atau Cross-Site Request Forgery, merupakan serangan  dimana penyerang dengan mudah mengirimkan permintaan jahat dari situs lain dengan cara meniru request asli dari aplikasi kita. `crsf_token` adalah untuk Django memverifikasi bahwa permintaan memang berasal dari pengguna dan bukan *source* lain.
 
 ### Pembuatan Form dan Data Delivery pada Craftics-Cart!
 
-1. Membuat file 'forms.py' untuk inisiasi atribut yang diminta kepada User
+1. Membuat file `forms.py` untuk inisiasi atribut yang diminta kepada User
 
-2. Membuat fungsi pada 'views.py' dalam bentuk XML, JSON, XML by ID, dan JSON by ID.
+2. Membuat fungsi pada `views.py` dalam bentuk XML, JSON, XML by ID, dan JSON by ID.
 
-3. Mmebuat *routing* URL dengan meng-*import* fungsi ke 'urls.py' dan menambhahkan path URL ke 'urlpatterns'
+3. Mmebuat *routing* URL dengan meng-*import* fungsi ke `urls.py` dan menambhahkan path URL ke `urlpatterns`
 
 4. Hasil akses URL pada *Postman*
 
@@ -173,4 +173,4 @@ Penulisan JSON lebih ringan dengan format yang lebih sederhana. Sehingga lebih m
     - JSON by ID
     <img src="image/json-id.png">
 
-5. Melakukan 'add', 'commit', dan 'push' ke github dan PWS.
+5. Melakukan `add`, `commit`, dan `push` ke github dan PWS.
