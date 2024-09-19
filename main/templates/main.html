@@ -146,6 +146,13 @@
         <a href="{% url 'main:create_craft_entry' %}">
             <button>Add New Craft</button>
         </a>
+
+        <a href="{% url 'main:logout' %}">
+            <button>Logout</button>
+        </a>
+
+        <h5>Sesi terakhir login: {{ last_login }}</h5>
+
     </div>
 </body>
 {% endblock content %}
