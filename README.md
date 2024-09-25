@@ -340,6 +340,12 @@ path('logout/', logout_user, name='logout'),
 
     - Menambahkan tiga dummy data: Untuk setiap pengguna, tambahkan tiga data menggunakan model yang sudah ada, misalnya `name` atau `description`.
 
+    - contoh:
+
+        <img src="image/USER1.png">
+        <img src="image/USER2.png">
+
+
 3. Menghubungkan model dengan User
 
     - Untuk menghubungkan model Product dengan User, tambahkan ForeignKey di model Product:
