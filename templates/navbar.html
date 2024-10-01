@@ -1,0 +1,63 @@
+<head>
+  <!-- Menambahkan Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<!-- Pastikan tag ini ditambahkan di bagian atas template -->
+{% load static %}
+
+<nav class="bg-pink-500 shadow-lg fixed top-0 left-0 z-40 w-screen font-poppins">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20"> <!-- Sesuaikan tinggi navbar untuk mengakomodasi gambar yang lebih besar -->
+      <!-- Logo / Brand -->
+      <div class="flex items-center">
+        <!-- Ganti teks dengan gambar logo -->
+        <a href="/">
+          <img src="{% static 'image/logo.png' %}" alt="Craftics Cart Logo" class="h-16 w-auto"> <!-- Ukuran diperbesar -->
+        </a>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="hidden md:flex items-center space-x-8 font-montserrat">
+        {% if user.is_authenticated %}
+          <span class="text-yellow-100">Welcome, {{ user.username }}</span>
+          <a href="{% url 'main:logout' %}" class="text-white hover:text-yellow-100 font-bold py-2 px-4 rounded transition duration-300">
+            Logout
+          </a>
+        {% else %}
+          <a href="{% url 'main:login' %}" class="text-white hover:text-yellow-100 font-bold py-2 px-4 rounded transition duration-300">
+            Login
+          </a>
+          <a href="{% url 'main:register' %}" class="text-white hover:text-yellow-100 font-bold py-2 px-4 rounded transition duration-300">
+            Register
+          </a>
+        {% endif %}
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden flex items-center">
+        <button class="mobile-menu-button">
+          <svg class="w-6 h-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<style>
+  /* Menambahkan font Poppins dan Montserrat untuk navbar */
+  .font-poppins {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .font-montserrat {
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  /* Hover effect untuk navigasi */
+  nav a:hover {
+    text-decoration: underline;
+  }
+</style>

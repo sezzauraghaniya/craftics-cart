@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, render, redirect, reverse
 from main.forms import CraftEntryForm
 from main.models import Craft
 import datetime
@@ -8,7 +8,6 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse
 
 
 # Create your views here.
@@ -20,12 +19,6 @@ def show_main(request):
     context = {
         'nama' : request.user.username,
         'kelas': 'PBP F',
-
-        'crafts': [
-            {'name': 'Crochet Bunny', 'price': 65.000, 'description': 'Boneka bentuk kelinci terbuat dari bahan rajutan.'},
-            {'name': 'Clay Rings', 'price': 5.000, 'description': 'Cincin tanah liat warna-warni.'},
-        ],
-
         'craft_entries' : craft_entries,
         'last_login': request.COOKIES['last_login']
     }
@@ -59,11 +52,6 @@ def show_xml_by_id(request, id):
 def show_json_by_id(request, id):
     data = Craft.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
-
-def delete_craft(request, pk):
-    craft = get_object_or_404(Craft, pk=pk)
-    craft.delete()
-    return redirect('main:show_main')
 
 def register(request):
     form = UserCreationForm()
@@ -99,5 +87,25 @@ def logout_user(request):
     response.delete_cookie('last_login')
     return response
 
+def edit_craft(request, id):
+    # Get craft entry berdasarkan id
+    craft = Craft.objects.get(pk = id)
 
+    # Set craft entry sebagai instance dari form
+    form = CraftEntryForm(request.POST or None, instance=craft)
 
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_craft.html", context)
+
+def delete_craft(request, id):
+    # Get mood berdasarkan id
+    craft = Craft.objects.get(pk = id)
+    # Hapus mood
+    craft.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:show_main'))

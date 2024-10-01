@@ -62,8 +62,8 @@ class Crafts(models.Model):
     materials = models.CharField(max_length=255)
 
     @property
-    def is_mood_strong(self):
-        return self.mood_intensity > 5
+    def is_craft_strong(self):
+        return self.craft_intensity > 5
 ```
 
 10. Migrasi model untuk melacak perubahan pada model basis data.
@@ -411,5 +411,112 @@ Kemudian, di `show_main()`, ambil data dari cookie `last_login` dan tambahkan ke
 
 Terakhir, inisiasi tampilan pada `main.html`
 
+## Tugas 5: Desain Web menggunakan HTML, CSS dan Framework CSS
+
+### Prioritas Pengambilan CSS *Selector*
+
+Pada CSS, ketika terdapat beberapa selector yang mengatur satu elemen HTML, prioritas pengambilan gaya didasarkan pada tingkat spesifisitas selector tersebut. Berikut urutan prioritasnya:
+
+1. **Inline styles** (gaya langsung dalam elemen HTML) memiliki prioritas tertinggi.
+2. **ID selector** (menggunakan tanda #) memiliki spesifisitas lebih tinggi dibanding yang lain.
+3. **Class selector** (menggunakan tanda .), **attribute selector**, dan **pseudo-class** memiliki prioritas di bawah ID.
+4. **Tag selector** dan **pseudo-element** memiliki prioritas terendah.
+
+Jika dua selector memiliki tingkat spesifisitas yang sama, gaya yang diterapkan terakhir dalam kode CSS akan diambil.
+
+### *Responsive Design*
+
+**Responsive design** penting karena memastikan tampilan dan fungsi situs web tetap optimal di berbagai ukuran layar, dari ponsel hingga desktop. Dengan meningkatnya penggunaan perangkat mobile, penerapan responsive design sangat diperlukan agar pengguna mendapatkan pengalaman yang baik, tanpa harus melakukan zoom atau scroll berlebihan. 
+
+Contoh aplikasi yang sudah menerapkan responsive design adalah platform e-commerce seperti Tokopedia, yang tampak rapi di layar kecil. Sedangkan, aplikasi lama tanpa responsive design sering memerlukan zoom manual pada ponsel untuk melihat konten dengan jelas.
+
+### Margin, Border, and Padding.
+
+| **Aspek**            | **Penjelasan**                                                                 | **Efek Terhadap Layout**                                                                 |
+|----------------------|--------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|
+| **Margin**           | Jarak luar antara elemen dan elemen lain di luar elemen tersebut.               | Menambah jarak antar elemen di luar elemen tersebut.                                      |
+| **Border**           | Garis yang mengelilingi konten dan padding dari elemen.                         | Tidak mempengaruhi ukuran konten, tetapi menambah ketebalan elemen secara visual.         |
+| **Padding**          | Jarak antara konten dan batas (border) dari elemen.                             | Mendorong konten menjauh dari border, memperluas elemen secara internal.                 |
+| **Content**          | Isi dari elemen itu sendiri, misalnya teks atau gambar.                         | Elemen inti yang ditampilkan, pengubahannya mengubah tampilan langsung.                  |
+| **Background Color** | Warna latar belakang elemen yang berada di bawah konten dan padding.            | Mengubah tampilan visual keseluruhan elemen, meskipun tidak mempengaruhi layout langsung. |
+
+### Flex Box dan Grid Layout
+
+Flexbox dan Grid Layout adalah dua sistem tata letak (layout) modern dalam CSS yang digunakan untuk mengatur elemen di halaman web dengan cara yang lebih fleksibel dan responsif.
+
+- Flexbox (Flexible Box Layout):
+    - Flexbox berfokus pada pengaturan elemen dalam satu dimensi, baik secara horizontal (baris) atau vertikal (kolom).
+    - Penggunaannya ideal untuk membuat tata letak yang fleksibel, seperti menyusun elemen secara berurutan dan mendistribusikan ruang di antara atau di sekitar elemen.
+    - Kelebihannya adalah penyesuaian elemen bisa dilakukan secara otomatis sesuai ukuran kontainer atau layar.
+    - Contoh penggunaan: Membuat navbar atau galeri gambar yang elemen-elemennya bisa beradaptasi dengan lebar layar.
+
+- Grid Layout:
+    - Grid bekerja dalam dua dimensi, yaitu baris dan kolom, yang memungkinkan tata letak elemen lebih kompleks.
+    - Dengan Grid, Anda dapat membagi halaman menjadi beberapa bagian (area) dan menempatkan elemen dalam berbagai kombinasi baris dan kolom.
+    - Kelebihannya adalah kontrol penuh atas tata letak dua dimensi, yang lebih cocok untuk desain halaman yang membutuhkan struktur area yang lebih terperinci.
+    - Contoh penggunaan: Membuat tata letak halaman web yang memiliki bagian header, sidebar, konten utama, dan footer.
+
+- Kegunaan:
+
+    1. Flexbox lebih efisien untuk tata letak sederhana yang memerlukan penyesuaian satu dimensi.
+    2. Grid Layout lebih cocok untuk tata letak halaman yang lebih kompleks dengan penempatan elemen dalam bentuk baris dan kolom.
+    
+Dengan kombinasi kedua konsep ini, desainer web bisa menciptakan tata letak yang responsif dan fleksibel untuk berbagai ukuran layar.
+
+### Implementasi Checklist
+
+1. Implementasikan fungsi untuk menghapus dan mengedit *product*.
+
+    - Menambahkan fungsi `edit_craft` dan ` delete_craft` pada `views.py` 
+
+    ``` bash
+    def edit_craft(request, id):
+    # Get craft entry berdasarkan id
+    craft = craftEntry.objects.get(pk = id)
+
+    # Set craft entry sebagai instance dari form
+    form = craftEntryForm(request.POST or None, instance=craft)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_craft.html", context)
+    ```
+
+    ``` bash 
+    def delete_craft(request, id):
+    # Get craft berdasarkan id
+    craft = craftEntry.objects.get(pk = id)
+    # Hapus craft
+    craft.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:show_main'))
+    ```
+
+    - import method ke `urls.py` lalu tambahkan *path url* ke `urlpatterns`
+
+    - menambahkan button **edit** dan **delete** pada `main.html`
+
+2. Kustomisasi halaman daftar product menjadi lebih menarik dan responsive.
+    
+    - Kondisi ketika belum ada produk : menggunakan kode `{% if not craft_entries %}`
+    - Menambahkan detail product menggunakan **card** : kode akan memasuki kondisi `{% else %}`, lalu menampilkan produk yang ada dengan memanfaatkan `card_craft.html`
+
+3. Membuat Button!
+    - Memanfaatkan method `edit_craft` dan `delete_craft` pada `views.py`
+
+    - Pastikan bahwa setelah membuat button, akan ada yang redirect ke page untuk **delete** atau **edit**
+
+    - Buat html file (`edit_craft.html`) dan tampilkan nama produk dan fields yang ingin diubah
+
+    - Untuk button delete, akan terlihat pada main.html yang sudah ditambahkan kode button.
 
 
+4. Navigation Bar!
+    - Membuat file html untuk fitur navigation bar
+    - menambahkan potongan kode `{% include 'navber.html' %}` untuk *link* html ke html-html lainnya
+
+Contoh Navigation Bar:

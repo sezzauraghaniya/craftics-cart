@@ -8,6 +8,7 @@ class Craft(models.Model):
     name = models.CharField(max_length=255)
     price = models.IntegerField()
     description = models.TextField(max_length=2000, default='')
+    image_url = models.URLField(max_length=500, blank=True, null=True)
 
     def __str__(self):
         return self.name
