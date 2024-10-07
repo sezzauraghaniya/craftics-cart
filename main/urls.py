@@ -4,6 +4,7 @@ from uuid import UUID
 from main.views import show_main, create_craft_entry, show_xml, show_json, show_json_by_id, show_xml_by_id
 from main.views import login_user, register, logout_user
 from main.views import edit_craft, delete_craft
+from main.views import add_craft_entry_ajax
 
 app_name = 'main'
 
@@ -19,5 +20,5 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
     path('edit-craft/<uuid:id>', views.edit_craft, name='edit_craft'),
     path('delete/<uuid:id>', delete_craft, name='delete_craft'),
-]
-
+    path('add-craft-entry-ajax', add_craft_entry_ajax, name='add_craft_entry_ajax'),
+]   

@@ -13,12 +13,26 @@
 }
 
 @keyframes shine {
-    0% { background-position: -150% 0; } /* Kurangi pergerakan */
-    100% { background-position: 150% 0; }
-}
-
-.animate-shine {
-    background: linear-gradient(120deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.2));
-    background-size: 150% 100%; /* Sesuaikan ukuran */
-    animation: shine 5s infinite; /* Perpanjang durasi animasi agar lebih lembut */
-}
+    0% {
+      background-position: -200%;
+    }
+    100% {
+      background-position: 200%;
+    }
+  }
+  
+  .hover-shine {
+    background-image: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.1) 40%,
+      rgba(255, 255, 255, 0.3) 70%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
+    background-size: 200% auto;
+    transition: background-position 0.4s;
+  }
+  
+  .hover-shine:hover {
+    animation: shine 0.75s forwards;
+  }  

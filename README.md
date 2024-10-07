@@ -519,4 +519,119 @@ Dengan kombinasi kedua konsep ini, desainer web bisa menciptakan tata letak yang
     - Membuat file html untuk fitur navigation bar
     - menambahkan potongan kode `{% include 'navber.html' %}` untuk *link* html ke html-html lainnya
 
-Contoh Navigation Bar:
+## Tugas 6: JavaScript dan AJAX
+###  JavaScript dalam Pengembangan Aplikasi Web
+- **Interaktivitas:** JavaScript memungkinkan pengembang untuk membuat elemen halaman web yang interaktif, seperti formulir dinamis, animasi, dan elemen responsif tanpa harus memuat ulang seluruh halaman.
+- **Responsivitas:** Dengan JavaScript, aplikasi web dapat merespons tindakan pengguna secara instan, seperti mengubah konten halaman secara real-time (misalnya, menambahkan item ke keranjang belanja atau menampilkan data baru).
+- **Komunikasi Asinkron:** JavaScript memungkinkan komunikasi asinkron antara browser dan server menggunakan AJAX (Asynchronous JavaScript and XML), sehingga pengguna tidak harus menunggu halaman dimuat ulang untuk mendapatkan data baru dari server.
+- **Pengalaman Pengguna yang Lebih Baik:** Dengan JavaScript, aplikasi web dapat memberikan pengalaman pengguna yang lebih mulus dan cepat dengan memproses sebagian besar interaksi di sisi klien tanpa mengganggu keseluruhan aplikasi.
+
+### Fungsi `await` dan `fetch()`
+
+`await` digunakan untuk menunggu hasil dari operasi asinkron sebelum melanjutkan eksekusi kode. Dalam konteks `fetch()`, `await` akan menunggu hingga permintaan ke server selesai dan responsnya tersedia.
+
+Jika tidak menggunakan `await`, fungsi `fetch()` akan mengembalikan promise yang belum selesai. Kode berikutnya akan berjalan sebelum respons diterima, sehingga Anda tidak akan bisa mengakses data yang diambil dari server. Sebagai contoh, jika Anda tidak menggunakan `await`, Anda mungkin akan mencoba menggunakan data yang belum tersedia, yang bisa menghasilkan kesalahan atau hasil yang tidak diinginkan.
+
+Misalkan pada,
+
+``` bash
+const response = await fetch('/some-url');  // Menunggu respons selesai
+const data = await response.json();  // Menunggu parsing JSON selesai
+```
+
+Jika tidak menggunakan `await`, kode berikutnya akan berjalan tanpa menunggu:
+
+``` bash
+const response = fetch('/some-url');  // Ini masih promise, belum ada respons
+const data = response.json();  // Akan gagal, karena respons belum ada
+```
+
+### Mengapa Perlu Menggunakan Decorator `csrf_exempt` pada View untuk AJAX POST
+
+- CSRF (Cross-Site Request Forgery) adalah serangan di mana permintaan tidak sah dilakukan dari pengguna yang sah ke server. Django secara otomatis melindungi aplikasi dari serangan ini dengan menggunakan token CSRF pada setiap permintaan POST.
+
+- Jika kita menggunakan AJAX POST tanpa mengirimkan token CSRF, Django akan memblokir permintaan tersebut. Decorator csrf_exempt digunakan untuk menonaktifkan pengecekan token CSRF pada view tertentu yang digunakan untuk menerima permintaan POST dari AJAX. Namun, ini berpotensi membuka celah keamanan jika tidak diterapkan dengan hati-hati.
+
+Idealnya, kita harus tetap menyertakan CSRF token dalam AJAX request daripada menonaktifkan CSRF sepenuhnya.
+
+### Mengapa Pembersihan Data Input Pengguna Dilakukan di Backend juga?
+
+- Keamanan: Validasi dan pembersihan data di backend sangat penting karena pengguna dapat memodifikasi kode frontend seperti JavaScript atau HTML sebelum mengirim data ke server. Data yang diterima dari pengguna harus selalu dianggap tidak dapat dipercaya.
+
+- Konsistensi: Validasi di backend memastikan bahwa aturan validasi diterapkan secara konsisten dan tidak hanya bergantung pada kode frontend, yang mungkin dimodifikasi atau dilewati oleh pengguna.
+
+- Menghindari Serangan: Backend melindungi dari serangan injeksi (seperti SQL Injection atau XSS) dengan membersihkan dan memvalidasi data input pengguna sebelum menyimpannya ke database atau menampilkannya kembali.
+
+    **Mengapa tidak hanya di frontend:** Karena pengguna dapat mematikan atau mengabaikan validasi di frontend, backend harus tetap melakukan validasi sebagai pertahanan terakhir.
+
+### Pengerjaan Checklist
+
+1. Membuat Form untuk Input Data
+Membuat form HTML untuk menangani input dari pengguna yang mencakup name, description, price, dan image_url. Form ini digunakan untuk menambah entri baru melalui AJAX.
+
+``` bash
+html
+Copy code
+<form id="craftEntryForm">
+    <input type="text" id="name" name="name" placeholder="Enter craft name" required>
+    <textarea id="description" name="description" placeholder="Describe the craft" required></textarea>
+    <input type="number" id="price" name="price" required>
+    <input type="url" id="image_url" name="image_url" placeholder="Image URL">
+</form>
+```
+
+2. Menambahkan AJAX untuk Submit Form
+Menggunakan AJAX dengan fetch untuk menangani pengiriman form secara asinkron tanpa perlu refresh halaman.
+
+``` bash
+javascript
+Copy code
+function addCraftEntry() {
+    fetch("{% url 'main:add_craft_entry_ajax' %}", {
+        method: "POST",
+        body: new FormData(document.querySelector('#craftEntryForm')),
+    })
+    .then(response => refreshCraftEntries());
+    document.getElementById("craftEntryForm").reset();
+    hideModal();
+}
+```
+
+3. Menambahkan Validasi di Backend
+menggunakan Django views untuk memproses data yang dikirimkan oleh pengguna dan membersihkan input menggunakan strip_tags.
+
+``` bash
+python
+Copy code
+from django.utils.html import strip_tags
+
+def add_craft_entry_ajax(request):
+    name = strip_tags(request.POST.get('name'))
+    description = strip_tags(request.POST.get('description'))
+```
+
+4. Menambahkan Token CSRF
+Untuk keamanan, menambahkan token CSRF ke permintaan AJAX agar permintaan POST dilindungi dari serangan CSRF.
+
+``` bash
+javascript
+Copy code
+const csrftoken = getCookie('csrftoken');
+fetch("{% url 'main:add_craft_entry_ajax' %}", {
+    method: "POST",
+    headers: {'X-CSRFToken': csrftoken},
+    body: new FormData(document.querySelector('#craftEntryForm')),
+});
+```
+
+5. Menampilkan Data Secara Dinamis
+Setelah data ditambahkan, mengambil ulang entri terbaru dan menampilkan dalam halaman tanpa perlu reload menggunakan AJAX.
+
+``` bash
+javascript
+Copy code
+async function refreshCraftEntries() {
+    const craftEntries = await getCraftEntries();
+    // Generate HTML untuk tiap item dan tampilkan
+}
+```
