@@ -109,13 +109,13 @@
 
 
   <!-- Card Section -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-8">
+  <!-- <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-8">
     {% if craft_entries %}
       {% for craft_entry in craft_entries %}
         {% include 'card_craft.html' with craft_entry=craft_entry %}
       {% endfor %}
     {% endif %}
-  </div>
+  </div> -->
 
   <!-- Timestamp di Paling Bawah -->
   <div class="text-center mt-8">
@@ -184,29 +184,29 @@
     else {
       classNameString = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 w-full"; // Reduced gap for smaller cards
       craftEntries.forEach((item) => {
-        const name = DOMPurify.sanitize(name);  // Sanitize the craft name
-        const description = DOMPurify.sanitize(description);  // Sanitize the craft description
+        const name = DOMPurify.sanitize(item.fields.name);  // Sanitize the craft name
+        const description = DOMPurify.sanitize(item.fields.description);  // Sanitize the craft description
           htmlString += `
           <div class="hover-shine bg-white rounded-lg shadow-lg p-1 mb-3 w-full max-w-[10rem] mx-auto border-2 border-pink-500">
               <!-- Image Section (Square) -->
               <div class="w-full h-auto aspect-square bg-pink-500 overflow-hidden rounded-lg mb-2">
-                  <img src="${image_url ? image_url : '{% static "image/default-card.png" %}'}" alt="Craft Image" class="w-full h-full object-cover">
+                  <img src="${item.fields.image_url ? item.fields.image_url : '{% static "image/default-card.png" %}'}" alt="Craft Image" class="w-full h-full object-cover">
               </div>
               
               <!-- Name of Craft -->
               <div class="text-center px-1">
-                  <h3 class="text-pink-500 text-sm font-bold mb-1">${name}</h3>
+                  <h3 class="text-pink-500 text-sm font-bold mb-1">${item.fields.name}</h3>
                   
                   <!-- Description -->
                   <p class="text-pink-500 text-xs italic mb-1">
-                      "${description}"
+                      "${item.fields.description}"
                   </p>
               </div>
 
               <!-- Price Section -->
               <div class="flex justify-center mt-2">
                   <div class="bg-pink-500 text-white py-1 px-2 rounded-full font-bold text-xs">
-                      Price: $${price}
+                      Price: $${item.fields.price}
                   </div>
               </div>
 
@@ -264,24 +264,29 @@
   document.getElementById("cancelButton").addEventListener("click", hideModal);
   document.getElementById("closeModalBtn").addEventListener("click", hideModal);
 
-
   function addCraftEntry() {
     fetch("{% url 'main:add_craft_entry_ajax' %}", {
       method: "POST",
-      body: new FormData(document.querySelector('#craftEntryForm')),  // Refers to the craft entry form
+      body: new FormData(document.querySelector('#craftEntryForm')),  // Menggunakan form untuk Craft Entry
     })
-    .then(response => refreshCraftEntries())  // Refresh the craft entries after adding
+    .then(response => refreshCraftEntries())  // Refresh daftar craft setelah craft ditambahkan
 
-    document.getElementById("craftEntryForm").reset();  // Reset the form after submission
-    document.querySelector("[data-modal-toggle='crudModal']").click();  // Close the modal after adding
+    // Reset form setelah submit berhasil
+    document.getElementById("craftEntryForm").reset(); 
 
-    return false;
-  }
+    // Tutup modal setelah penambahan item
+    document.querySelector("[data-modal-toggle='crudModal']").click();
 
-  document.getElementById("craftEntryForm").addEventListener("submit", (e) => {
-    e.preventDefault();  // Prevent default form submission
-    addCraftEntry();  // Call the function to add the craft via AJAX
-});
+    return false;  // Mencegah default form submission
+}
+
+// Menghubungkan event submit dengan fungsi addCraftEntry
+// document.getElementById("submitCraftEntry").onclick = addCraftEntry;
+document.getElementById("craftEntryForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    addCraftEntry();
+  })
+
 </script>
 
 {% endblock content %}
